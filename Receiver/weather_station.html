@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ESP32 Weather Station</title>
+<style>
+    body {{
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }}
+
+    h1 {{
+        font-size: 2.5rem;
+        margin: 0.5rem;
+    }}
+
+    h4 {{
+        font-size: 1.25rem;
+        margin: 0.5rem;
+    }}
+
+    p {{
+        font-size: 1.1rem;
+        margin: 0.5rem;
+    }}
+
+    strong {{
+        font-weight: bold;
+        color: #0078d7;
+    }}
+
+    #main {{
+        max-width: 600px;
+        margin: 3rem auto;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
+        padding: 1rem;
+        text-align: center;
+    }}
+
+    #content {{
+        padding: 1rem;
+    }}
+</style>
+<script>
+    var ajaxRequest = new XMLHttpRequest();
+
+    function ajaxLoad(ajaxURL) {{
+        ajaxRequest.open('GET', ajaxURL, true);
+        ajaxRequest.onreadystatechange = function() {{
+            if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {{
+                var ajaxResult = ajaxRequest.responseText;
+                var tmpArray = ajaxResult.split("|");
+                document.getElementById('temp').innerHTML = tmpArray[0];
+                document.getElementById('air_pressure').innerHTML = tmpArray[1];
+            }}
+        }}
+        ajaxRequest.send();
+    }}
+
+    function updateSensors() {{
+        ajaxLoad('getSensors');
+    }}
+
+    setInterval(updateSensors, 3000);
+</script>
+</head>
+<body>
+    <div id="main">
+        <h1>MicroPython Weather Station</h1>
+        <h4>Web server on ESP32 | Sensor values auto-update using AJAX.</h4>
+        <div id="content">
+            <p>Temperature: <strong><span id="temp">{temp}</span> &deg;C</strong></p>
+        </div>
+    </div>
+</body>
+</html>
