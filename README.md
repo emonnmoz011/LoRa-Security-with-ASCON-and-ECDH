@@ -1,127 +1,164 @@
-Project Title:
-Secure LoRa-based IoT Communication with ASCON and AES-256, featuring ECDH Key Exchange and Data Visualization
+def generate_aesthetic_readme():
+    readme = r"""
+  ██████╗ ███████╗ ██████╗██╗   ██╗███╗   ███╗ █████╗ ███╗   ██╗
+  ██╔══██╗██╔════╝██╔════╝██║   ██║████╗ ████║██╔══██╗████╗  ██║
+  ██████╔╝█████╗  ██║     ██║   ██║██╔████╔██║███████║██╔██╗ ██║
+  ██╔══██╗██╔══╝  ██║     ██║   ██║██║╚██╔╝██║██╔══██║██║╚██╗██║
+  ██║  ██║███████╗╚██████╗╚██████╔╝██║ ╚═╝ ██║██║  ██║██║ ╚████║
+  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝
 
-Overview:
-This project explores secure and efficient long-range communication for IoT devices using LoRa technology. It incorporates
-the newly standardized NIST ASCON encryption, AES-256 encryption, and Elliptic Curve Diffie-Hellman (ECDH) key exchange
-to ensure robust security. The system is designed to handle various sensor data and supports three data visualization
-methods: real-time updates on an offline web server, local CSV storage, and secure cloud storage on Adafruit IO.
-Performance comparisons show that ASCON outperforms AES-256 in terms of SNR, RSSI, latency, power consumption, 
-and memory usage.
+=============================================================
+   Secure LoRa-based IoT Communication with ASCON & AES-256
+   Featuring ECDH Key Exchange & Multi-Method Data Display
+=============================================================
 
-Key Components:
-  1. LoRa RYLR896 Modules
-  2. ESP32 (Receiver)
-  3. Raspberry Pi Pico (Transmitter)
-  4. Environmental Sensors (Temperature and Pressure)
-  5. ECDH Key Exchange (using x25519.py)
-  6. AES-256 and ASCON Encryption
-  7. Data Visualization
-     - Offline Webserver
-     - Local CSV Files
-     - Adafruit IO Cloud Storage
+1. INTRODUCTION
+---------------
+This project explores secure and efficient long-range communication for 
+IoT devices using LoRa technology. It integrates:
+• NIST ASCON (newly standardized, lightweight AEAD cipher)
+• AES-256 (robust encryption standard)
+• Elliptic Curve Diffie-Hellman (ECDH) key exchange
 
-Folder Structure (Example):
-  1. Transmitter Code:
-     - rpi_uart_ascon.py (Offline Web Server Version)
-     - tx_key_ex_ascon_cloud.py (Adafruit IO Cloud Version)
-     - tx_key_ex_ascon_csv.py (Local CSV Version)
-     - x25519.py (ECDH Implementation)
-     - ecdh.py (ECDH Demo)
-     - pico_art.py (Pressure Sensor Code Example)
-  2. Receiver Code:
-     - rx_key_ex_ascon_offline_webpage.py (Offline Web Server Receiver)
-     - rx_key_ex_ascon_cloud.py (Adafruit IO Cloud Receiver)
-     - rx_key_ex_ascon_csv.py (Local CSV Receiver)
-     - weather_station.html (HTML for Offline Web Server)
-  3. Documentation and Images:
-     - Pinout ESP32
-     - Pinout Pico
-     - RYLR896_ESP32 Connections
-     - RYLR896_RPico Connections
-     - BMP 280 with Pico
-  4. Hacker Mode (Optional):
-     - MITM Attack Scripts
-     - Flooding Attack Scripts
+By harnessing the advantages of LoRa (low power and long-range), and 
+blending advanced encryption with a secure key exchange, it ensures 
+data integrity and confidentiality across IoT networks.
 
-Hardware Setup:
-  1. Connect the LoRa RYLR896 module to the ESP32 and Raspberry Pi Pico as per the provided pinout diagrams.
-     - TX/RX pins
-     - 3.3V power supply
-     - Ground connections
-     - Any specific pins designated for your sensors
-  2. For the Temperature Sensor:
-     - Use the I2C communication pins on the Pico (GPIO pins typically labeled SDA and SCL).
-     - Implement the relevant code from rpi_uart_ascon.py or similar transmitter files.
-  3. For the Pressure Sensor (BMP280 or similar):
-     - Replace the temperature sensor’s I2C code with the code from pico_art.py, focusing on reading 
-       the pressure sensor data instead.
-  4. On the ESP32 side:
-     - Use the receiver code that matches your chosen data visualization (offline web, CSV storage, or cloud).
-     - If using the offline web server, connect to the Wi-Fi hotspot created by the ESP32 and visit the IP address 
-       shown in the console.
+2. SYSTEM FEATURES
+------------------
+• LoRa RYLR896 Modules
+• Transmitters:
+   - Raspberry Pi Pico
+   - Environmental Sensors (Temperature & Pressure)
+• Receiver:
+   - ESP32
+   - Secure Key Exchange via ECDH
+   - Decryption using ASCON or AES-256
+• Data Visualization:
+   - Offline Webserver
+   - Local CSV Storage
+   - Adafruit IO Cloud Storage
 
-Key Exchange (Replacing DH with ECDH):
-  1. Delete or comment out the existing Diffie-Hellman (DH) code.
-  2. Import x25519.py into your main scripts (transmitter and receiver).
-  3. Refer to ecdh.py for a usage example:
-     - Generate key pairs on both transmitter and receiver.
-     - Exchange public keys over LoRa.
-     - Derive the shared secret from the received public key.
-  4. Use the derived shared secret to strengthen the encryption keys for ASCON or AES-256.
+3. FOLDER STRUCTURE (EXAMPLE)
+-----------------------------
+Transmitter Code:
+   ├── rpi_uart_ascon.py
+   ├── tx_key_ex_ascon_cloud.py
+   ├── tx_key_ex_ascon_csv.py
+   ├── x25519.py       (ECDH Implementation)
+   ├── ecdh.py         (ECDH Demo)
+   └── pico_art.py     (Pressure Sensor Logic)
 
-Encryption Details:
-  1. ASCON:
-     - Newly standardized lightweight AEAD cipher by NIST.
-     - Encrypt sensor data on the transmitter using the shared secret from ECDH.
-     - Decrypt on the receiver side using the same shared secret.
-  2. AES-256:
-     - Traditional encryption standard.
-     - Use the derived key from ECDH if you want a fallback or comparative testing.
+Receiver Code:
+   ├── rx_key_ex_ascon_offline_webpage.py
+   ├── rx_key_ex_ascon_cloud.py
+   ├── rx_key_ex_ascon_csv.py
+   └── weather_station.html (Offline Web Interface)
 
-Data Visualization:
-  1. Offline Web Server:
-     - Use rx_key_ex_ascon_offline_webpage.py.
-     - The ESP32 creates a hotspot and displays an IP address in the console.
-     - Connect to this Wi-Fi on your computer or mobile device.
-     - Enter the IP address in a web browser, then refresh the page to view updated sensor readings.
-  2. Local CSV Storage:
-     - Use rx_key_ex_ascon_csv.py on the receiver.
-     - Data is saved in a CSV file in the ESP32 file system.
-     - Download the file using Thonny or a similar IDE to view historical data.
-  3. Adafruit IO Cloud:
-     - Use rx_key_ex_ascon_cloud.py on the receiver.
-     - Sign up for Adafruit IO (https://io.adafruit.com/).
-     - Create a feed for your data.
-     - Insert your Adafruit IO key, feed name, and username in the script.
-     - Ensure the ESP32 is connected to a 2.4 GHz Wi-Fi network.
-     - Data will appear on your Adafruit IO dashboard.
+Documentation & Images:
+   • Pinout ESP32
+   • Pinout Pico
+   • RYLR896_ESP32 Connections
+   • RYLR896_RPico Connections
+   • BMP 280 with Pico
 
 Hacker Mode (Optional):
-  1. MITM Attack:
-     - Create a duplicate receiver without key exchange or encryption.
-     - Attempt to intercept LoRa packets from the transmitter.
-     - Demonstrates that without the encryption key, the data remains secure.
-  2. Flooding Attack:
-     - Create a rogue transmitter that sends continuous bogus messages.
-     - Attempt to overwhelm the legitimate receiver with spam.
-     - The receiver only accepts packets from known addresses with the correct communication parameters 
-       and network ID, illustrating robust filtering.
+   • MITM Attack Scripts
+   • Flooding Attack Scripts
 
-Performance Metrics:
-  1. Signal-to-Noise Ratio (SNR)
-  2. Received Signal Strength Indicator (RSSI)
-  3. Latency
-  4. Power Consumption
-  5. Memory Usage
+4. HARDWARE SETUP
+-----------------
+a) Wiring:
+   - Connect LoRa RYLR896 modules to the ESP32 and Raspberry Pi Pico
+     (TX↔RX, 3.3V, GND, etc.)
+   - Refer to provided pinout diagrams for clarity.
 
-Conclusion:
-This project demonstrates a secure, long-range IoT communication system using LoRa, ASCON, AES-256, and ECDH. 
-It addresses modern IoT requirements by providing multi-layer security, cost-effectiveness, and flexible data visualization. 
-The setup and code can be easily adapted for diverse environmental sensors and expanded to accommodate additional functionalities.
+b) Sensors:
+   - Temperature Sensor on I2C pins of Pico (SDA, SCL)
+   - Pressure Sensor (BMP280 or similar) code found in pico_art.py
+   - Swap out I2C sensor code accordingly.
 
-Contact:
-For questions or clarifications, please reach out to the project contributors or consult the documentation within the repository.
+c) Receiver (ESP32):
+   - Match your chosen data visualization script 
+     (offline web, CSV, or cloud-based storage).
+
+5. ECDH KEY EXCHANGE
+--------------------
+1) Remove traditional DH from the transmitters and receivers.
+2) Import x25519.py into each script.
+3) Use ecdh.py as a reference for:
+   - Generating ECDH key pairs
+   - Exchanging public keys over LoRa
+   - Computing the shared secret
+4) Use the derived shared secret to initialize ASCON or AES-256 
+   encryption keys for enhanced security.
+
+6. ENCRYPTION DETAILS
+---------------------
+ASCON:
+  - Lightweight and efficient, suitable for IoT
+  - Encrypt data on the transmitter using the ECDH-derived key
+  - Decrypt on the receiver side
+
+AES-256:
+  - Tried-and-tested encryption standard
+  - Use ECDH-derived key for AES encryption if needed
+  - Compare performance with ASCON
+
+7. DATA VISUALIZATION MODES
+---------------------------
+Offline Web Server:
+  - Use rx_key_ex_ascon_offline_webpage.py
+  - ESP32 becomes a Wi-Fi hotspot → connect and visit shown IP
+  - weather_station.html for data display
+
+Local CSV Storage:
+  - Use rx_key_ex_ascon_csv.py
+  - Saves data to .csv in ESP32’s filesystem
+  - Retrieve via Thonny (or similar tool)
+
+Adafruit IO Cloud:
+  - Use rx_key_ex_ascon_cloud.py
+  - Requires Adafruit IO account, feed, and credentials
+  - Use a 2.4 GHz Wi-Fi network
+  - Monitor sensor data on your Adafruit IO dashboard
+
+8. HACKER MODE (OPTIONAL)
+-------------------------
+Man-in-the-Middle (MITM):
+  - Duplicate receiver with no key exchange or encryption
+  - Attempts to intercept data are futile without the correct key
+
+Flooding Attack:
+  - Rogue transmitter bombards the receiver with junk LoRa messages
+  - Receiver only accepts valid addresses & parameters
+  - Demonstrates system resilience under DoS-like conditions
+
+9. PERFORMANCE METRICS
+----------------------
+- Signal-to-Noise Ratio (SNR)
+- Received Signal Strength Indicator (RSSI)
+- Latency
+- Power Consumption
+- Memory Usage
+
+10. CONCLUSION
+-------------
+By merging LoRa’s long-range, low-power benefits with NIST ASCON and 
+AES-256 encryption (strengthened through ECDH), this project sets a new 
+standard for secure IoT deployments. It effectively balances cost, 
+security, and real-time data visibility in a flexible modular system.
+
+CONTACT
+-------
+For any queries or support, please refer to the repository’s documentation 
+or contact the project contributors.
+
+=============================================================
+          End of Aesthetic README — Enjoy Secure IoT
+=============================================================
 """
+    print(readme)
 
-print(content)
+# Usage:
+# generate_aesthetic_readme()
